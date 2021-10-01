@@ -20,13 +20,20 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td class="text-center">No</td>
-						<td>Title</td>
-						<td>Filename</td>
-						<td>Action</td>
-						<td>Preview</td>
-					</tr>
+					<% @lists.each do |list| %>
+						<tr>
+							<td class="text-center">No</td>
+							<td><%= link_to list.title, list %></td>
+							<td><%= list.filename %></td>
+							<td>
+								<%= link_to "Edit", edit_list_path(list.id) %>
+								<%= link_to "Destroy", list_path(list.id),
+				                  method: :delete,
+				                  data: { confirm: "Are you sure?" } %>
+							</td>
+							<td>Preview</td>
+						</tr>
+					<% end %>
 				</tbody>
 			</table>
 		</div>
