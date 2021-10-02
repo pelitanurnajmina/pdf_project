@@ -43,13 +43,10 @@
 									<div class="form-group">
 										<%= form.label :text %><br>
 										<%= form.text_field :value, :value => @text ? @text.value : :'', :class => 'form-control form-attribute' %> <br>
-										<div>
-											<button type="submit" class="btn btn-dark">Run</button>
-										</div>
 									</div>
 
 									<div>
-							        	<input type="text" name="coordinate" value="<%= @text ? @text.coordinate : :''  %>" id="coordinate">
+							        	<input type="hidden" name="coordinate" value="<%= @text ? @text.coordinate : :'10,10'  %>" id="coordinate">
 									</div>
 
 									<!-- GAMBAR -->
@@ -58,16 +55,15 @@
 									</div>
 
 									<div class="form-group">
-										<br>
 										<%= form.label :link_picture %><br>
 										<%= form.text_area :picture_value, :value => @picture ? @picture.value : :'', :class => 'form-control form-attribute', :rows => "10" %> <br>
 										<div>
-											<button type="submit" class="btn btn-dark">Run</button>
+											<button type="submit" class="btn btn-dark">Submit</button>
 										</div>
 									</div>
 
 									<div>
-							        	<input type="text" name="picture_coordinate" value="<%= @picture ? @picture.coordinate : :''  %>" id="picture_coordinate">
+							        	<input type="hidden" name="picture_coordinate" value="<%= @picture ? @picture.coordinate : :'10,10'  %>" id="picture_coordinate">
 									</div>
 							<% end %>
 				    	</div>
