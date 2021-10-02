@@ -16,7 +16,7 @@ class ListsController < ApplicationController
     	@list = List.new(title: params[:list][:title], filename: uploaded_file.original_filename)
 
 	    if @list.save
-	      redirect_to @list
+	      redirect_to root_path
 	    else
 	      render :new
 	    end
