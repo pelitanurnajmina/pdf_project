@@ -16,7 +16,7 @@
 
           <div class="form-group">
             <%= form.label :filename %><br>
-            <%= form.file_field :filename, :class => "form-control" %>
+            <%= form.file_field :filename, :class => "form-control", :accept=> ".pdf" %>
             <% @list.errors.full_messages_for(:filename).each do |message| %>
               <div><%= message %></div>
             <% end %>
