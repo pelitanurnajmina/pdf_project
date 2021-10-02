@@ -25,6 +25,58 @@
 
 			    <div class="col-md-2">
 			    	<input type="hidden" name="filename" value="<%= @list.filename %>">
+			    	      	<%= form_with url: '/details', multipart: true do |form| %>
+			    	      	  <div>
+			    	      	   <%= form.label :list_id %><br>
+			    			    <%= form.text_field :list_id, :value => @list.id %> <br>
+			    	      	  </div>
+
+			    	      	TEXT
+			    	    	  <div>
+			    	    	   <%= form.label :attribute_type %><br>
+			    			    <%= form.text_field :attribute_type, :value => 'text' %> <br>
+			    	    	  </div>
+
+			    	      	  <div>
+			    	      	   <%= form.label :value %><br>
+			    	  		    <%= form.text_field :value, :value => @text ? @text.value : :'' %> <br>
+			    	  		    <div>
+			    	  		      <%= form.submit %>
+			    	  		    </div>
+			    	      	  </div>
+
+			    	      	  <div>
+			    	      	   <%= form.label :coordinate %><br>
+			    			    <%= form.text_field :coordinate, :value => @text ? @text.coordinate : :'' %> <br>
+			    	      	  </div>
+
+
+			    	      	  GAMBAR
+
+			    	    	  <div>
+			    	    	   <%= form.label :picture_attribute_type %><br>
+			    			    <%= form.text_field :picture_attribute_type, :value => 'picture' %> <br>
+			    	    	  </div>
+
+			    	      	  <div>
+			    	      	   <%= form.label :picture_value %><br>
+			    	  		    <%= form.text_field :picture_value, :value => @picture ? @picture.value : :'' %> <br>
+			    	  		    <div>
+			    	  		      <%= form.submit %>
+			    	  		    </div>
+			    	      	  </div>
+
+			    	      	  <div>
+			    	      	   <%= form.label :picture_coordinate %><br>
+			    			    <%= form.text_field :picture_coordinate, :value => @picture ? @picture.coordinate : :'' %> <br>
+			    	      	  </div>
+
+
+			    	      	  <br>
+			    	      	  <div>
+			    	      	    <%= form.submit %>
+			    	      	  </div>
+			    	      	<% end %>
 			    </div>
 
 			    <!-- <div class="col-md-9" style="position: absolute; top: 50">

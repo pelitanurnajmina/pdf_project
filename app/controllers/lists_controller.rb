@@ -24,6 +24,20 @@ class ListsController < ApplicationController
 
 	def show
     	@list = List.find(params[:id])
+
+    	@text = List.select('lists.*','attribute_type','value','coordinate')
+    			.joins('INNER JOIN details ON details.list_id = lists.id')
+    			.where('lists.id' => params[:id])
+    			.where('details.attribute_type' => 'text')
+    			.order('details.created_at DESC')
+    			.first
+
+    	@picture = List.select('lists.*','attribute_type','value','coordinate')
+    			.joins('INNER JOIN details ON details.list_id = lists.id')
+    			.where('lists.id' => params[:id])
+    			.where('details.attribute_type' => 'picture')
+    			.order('details.created_at DESC')
+    			.first
 	end
 
 	def edit
