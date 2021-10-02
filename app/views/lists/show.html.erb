@@ -1,3 +1,136 @@
-<h1><%= @list.title %></h1>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center mt-4">
+			<h2><h1><%= @list.title %></h1></h2>
+			<span><%= @list.filename %></span>
+		</div>
 
-<p><%= @list.filename %></p>
+		<div class="col-md-12 mt-4">
+			<div class="top-bar">
+				<button class="btn btn-primary" id="prev-page">
+			    	<i class="fas fa-arrow-circle-left"></i> Prev Page
+			    </button>
+			    <button class="btn btn-primary" id="next-page">
+			        Next Page <i class="fas fa-arrow-circle-right"></i>
+			    </button>
+			    <span class="page-info">
+			    	Page <span id="page-num"></span> of <span id="page-count"></span>
+			    </span>
+			</div>
+
+		    <div class="row">
+		    	<div class="col-md-10">
+		        	<canvas id="pdf-render" class="pdf-render"></canvas>
+		      	</div>
+
+			    <div class="col-md-2">
+			    	<input type="hidden" name="filename" value="<%= @list.filename %>">
+			    </div>
+
+			    <!-- <div class="col-md-9" style="position: absolute; top: 50">
+			    	<div id="container" style="background: #00ffff33;">
+			    		//
+			    	</div>
+			    </div> -->
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+<script type="text/javascript">
+	var url = '../uploads/'+$('input[name=filename]').val();
+
+	var pdfDoc = null,
+	  pageNum = 1,
+	  pageIsRendering = false,
+	  pageNumIsPending = null;
+
+	var scale = 1.5,
+	  canvas = document.querySelector('#pdf-render'),
+	  ctx = canvas.getContext('2d');
+
+	// Render the page
+	var renderPage = num => {
+	  pageIsRendering = true;
+
+	  // Get page
+	  pdfDoc.getPage(num).then(page => {
+	    // Set scale
+	    var viewport = page.getViewport({ scale });
+	    canvas.height = viewport.height;
+	    canvas.width = viewport.width;
+
+	    var renderCtx = {
+	      canvasContext: ctx,
+	      viewport
+	    };
+
+	    page.render(renderCtx).promise.then(() => {
+	      pageIsRendering = false;
+
+	      if (pageNumIsPending !== null) {
+	        renderPage(pageNumIsPending);
+	        pageNumIsPending = null;
+	      }
+	    });
+
+	    // Output current page
+	    document.querySelector('#page-num').textContent = num;
+	  });
+	};
+
+	// Check for pages rendering
+	var queueRenderPage = num => {
+	  if (pageIsRendering) {
+	    pageNumIsPending = num;
+	  } else {
+	    renderPage(num);
+	  }
+	};
+
+	// Show Prev Page
+	var showPrevPage = () => {
+	  if (pageNum <= 1) {
+	    return;
+	  }
+	  pageNum--;
+	  queueRenderPage(pageNum);
+	};
+
+	// Show Next Page
+	var showNextPage = () => {
+	  if (pageNum >= pdfDoc.numPages) {
+	    return;
+	  }
+	  pageNum++;
+	  queueRenderPage(pageNum);
+	};
+
+	// Get Document
+	pdfjsLib
+	  .getDocument(url)
+	  .promise.then(pdfDoc_ => {
+	    pdfDoc = pdfDoc_;
+
+	    document.querySelector('#page-count').textContent = pdfDoc.numPages;
+
+	    renderPage(pageNum);
+	  })
+	  .catch(err => {
+	    // Display error
+	    var div = document.createElement('div');
+	    div.className = 'error';
+	    div.appendChild(document.createTextNode(err.message));
+	    document.querySelector('body').insertBefore(div, canvas);
+	    // Remove top bar
+	    document.querySelector('.top-bar').style.display = 'none';
+	  });
+
+	// Button Events
+	document.querySelector('#prev-page').addEventListener('click', showPrevPage);
+	document.querySelector('#next-page').addEventListener('click', showNextPage);
+
+</script>
