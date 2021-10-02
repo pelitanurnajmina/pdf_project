@@ -1,6 +1,6 @@
 class DetailsController < ApplicationController
   	def create
-		Detail.where('details.list_id' => 1).destroy_all
+		Detail.where('details.list_id' => params[:list_id]).destroy_all
 
     	@detail_text = Detail.new(list_id: params[:list_id], 
     						attribute_type: params[:attribute_type],

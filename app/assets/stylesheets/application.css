@@ -92,6 +92,15 @@
 	padding: 1rem;
 }
 
-.pdf-render {
-	border: 1px solid #333;
+.pdf-container {
+	border: solid 1px #333;
+}
+
+.attribute {
+	margin-left: 50px; 
+	margin-top: 20px;
+}
+
+.form-attribute {
+	width: 80% !important;
 }

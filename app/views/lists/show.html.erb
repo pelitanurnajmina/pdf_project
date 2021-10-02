@@ -18,74 +18,67 @@
 			    </span>
 			</div>
 
-		    <div class="row">
-		    	<div class="col-md-10">
-		        	<canvas id="pdf-render" class="pdf-render"></canvas>
-		      	</div>
+			<div class="pdf-container">
+			    <div class="row">
+			    	<div class="col-md-9">
+			        	<canvas id="pdf-render" class="pdf-render"></canvas>
+			      	</div>
 
-			    <div class="col-md-2">
-			    	<input type="hidden" name="filename" value="<%= @list.filename %>">
-			    	      	<%= form_with url: '/details', multipart: true do |form| %>
-			    	      	  <div>
-			    	      	   <%= form.label :list_id %><br>
-			    			    <%= form.text_field :list_id, :value => @list.id %> <br>
-			    	      	  </div>
+				    <div class="col-md-3">
+				    	<div class="attribute">
+					    	<input type="hidden" name="filename" value="<%= @list.filename %>">
 
-			    	      	TEXT
-			    	    	  <div>
-			    	    	   <%= form.label :attribute_type %><br>
-			    			    <%= form.text_field :attribute_type, :value => 'text' %> <br>
-			    	    	  </div>
+				   			<%= form_with url: '/details', multipart: true do |form| %>
+					        	<input type="hidden" name="list_id" value="<%= @list.id %>">
 
-			    	      	  <div>
-			    	      	   <%= form.label :value %><br>
-			    	  		    <%= form.text_field :value, :value => @text ? @text.value : :'' %> <br>
-			    	  		    <div>
-			    	  		      <%= form.submit %>
-			    	  		    </div>
-			    	      	  </div>
+				    	    		<div>
+							        	<input type="hidden" name="attribute_type" value="text">
+					    	    	</div>
 
-			    	      	  <div>
-			    	      	   <%= form.label :coordinate %><br>
-			    			    <%= form.text_field :coordinate, :value => @text ? @text.coordinate : :'' %> <br>
-			    	      	  </div>
+					    	    	<!-- TEXT -->
+									<div class="form-group">
+										<%= form.label :text %><br>
+										<%= form.text_field :value, :value => @text ? @text.value : :'', :class => 'form-control form-attribute' %> <br>
+										<div>
+											<button type="submit" class="btn btn-dark">Run</button>
+										</div>
+									</div>
 
+									<div>
+							        	<input type="hidden" name="coordinate" value="<%= @text ? @text.coordinate : :''  %>">
+									</div>
 
-			    	      	  GAMBAR
+									<!-- GAMBAR -->
+									<div>
+							        	<input type="hidden" name="picture_attribute_type" value="picture">
+									</div>
 
-			    	    	  <div>
-			    	    	   <%= form.label :picture_attribute_type %><br>
-			    			    <%= form.text_field :picture_attribute_type, :value => 'picture' %> <br>
-			    	    	  </div>
+									<div class="form-group">
+										<br>
+										<%= form.label :link_picture %><br>
+										<%= form.text_area :picture_value, :value => @picture ? @picture.value : :'', :class => 'form-control form-attribute', :rows => "10" %> <br>
+										<div>
+											<button type="submit" class="btn btn-dark">Run</button>
+										</div>
+									</div>
 
-			    	      	  <div>
-			    	      	   <%= form.label :picture_value %><br>
-			    	  		    <%= form.text_field :picture_value, :value => @picture ? @picture.value : :'' %> <br>
-			    	  		    <div>
-			    	  		      <%= form.submit %>
-			    	  		    </div>
-			    	      	  </div>
+									<div>
+							        	<input type="hidden" name="picture_coordinate" value="<%= @picture ? @picture.coordinate : :''  %>">
+									</div>
+							<% end %>
+				    	</div>
+				    </div>
 
-			    	      	  <div>
-			    	      	   <%= form.label :picture_coordinate %><br>
-			    			    <%= form.text_field :picture_coordinate, :value => @picture ? @picture.coordinate : :'' %> <br>
-			    	      	  </div>
+				    <!-- <div class="col-md-9" style="position: absolute; top: 50">
+				    	<div id="container" style="background: #00ffff33;">
+				    		//
+				    	</div>
+				    </div> -->
 
-
-			    	      	  <br>
-			    	      	  <div>
-			    	      	    <%= form.submit %>
-			    	      	  </div>
-			    	      	<% end %>
-			    </div>
-
-			    <!-- <div class="col-md-9" style="position: absolute; top: 50">
-			    	<div id="container" style="background: #00ffff33;">
-			    		//
-			    	</div>
-			    </div> -->
-
+				</div>
+				
 			</div>
+
 		</div>
 	</div>
 </div>
