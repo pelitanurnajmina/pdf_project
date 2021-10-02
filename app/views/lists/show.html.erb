@@ -45,7 +45,7 @@
 									</div>
 
 									<div>
-							        	<input type="hidden" name="coordinate" value="<%= @text ? @text.coordinate : :''  %>">
+							        	<input type="text" name="coordinate" value="<%= @text ? @text.coordinate : :''  %>" id="coordinate">
 									</div>
 
 									<!-- GAMBAR -->
@@ -63,17 +63,17 @@
 									</div>
 
 									<div>
-							        	<input type="hidden" name="picture_coordinate" value="<%= @picture ? @picture.coordinate : :''  %>">
+							        	<input type="text" name="picture_coordinate" value="<%= @picture ? @picture.coordinate : :''  %>" id="picture_coordinate">
 									</div>
 							<% end %>
 				    	</div>
 				    </div>
 
-				    <!-- <div class="col-md-9" style="position: absolute; top: 50">
-				    	<div id="container" style="background: #00ffff33;">
-				    		//
+				    <div class="col-md-9" style="position: absolute; top: 50">
+				    	<div id="container">
+
 				    	</div>
-				    </div> -->
+				    </div>
 
 				</div>
 				
@@ -179,5 +179,70 @@
 	document.querySelector('#next-page').addEventListener('click', showNextPage);
 </script>
 <script type="text/javascript">
-	
+	// var width = document.getElementById('pdf-render').clientWidth;
+	// var height = document.getElementById('pdf-render').clientHeight;
+
+	var width = 892;
+	var height = 1262;
+
+	var stage = new Konva.Stage({
+	container: 'container',
+	width: width,
+	height: height,
+	});
+
+	var layer = new Konva.Layer();
+	var rectX = stage.width() / 2 - 50;
+	var rectY = stage.height() / 2 - 25;
+
+	var value_text = $('#value').val();
+	var coordinate_text = $('#coordinate').val().split(",");
+
+	var text = new Konva.Text({
+	  draggable: true,
+	  x: parseInt(coordinate_text[0]),
+	  y: parseInt(coordinate_text[1]),
+	  text: value_text,
+	  fontSize: 30,
+	  fontFamily: 'Calibri',
+	  fill: 'black',
+	});
+
+	text.on('mouseover', function () {
+		document.body.style.cursor = 'pointer';
+	});
+
+	text.on('mouseout', function () {
+		document.body.style.cursor = 'default';
+		console.log(stage.getPointerPosition());
+		$('#coordinate').val(parseInt(stage.getPointerPosition().x)+','+parseInt(stage.getPointerPosition().y));
+	});
+
+	var value_picture = $('#picture_value').val();
+	var coordinate_picture = $('#picture_coordinate').val().split(",");
+
+	Konva.Image.fromURL(value_picture, function (darthNode) {
+		var picture = darthNode.setAttrs({
+			x: parseInt(coordinate_picture[0]),
+			y: parseInt(coordinate_picture[1]),
+			width: 100,
+			height: 100,
+			draggable: true,
+		});
+
+		layer.add(picture);
+
+		picture.on('mouseover', function () {
+			document.body.style.cursor = 'pointer';
+		});
+
+		picture.on('mouseout', function () {
+			document.body.style.cursor = 'default';
+			console.log(stage.getPointerPosition());
+			$('#picture_coordinate').val(parseInt(stage.getPointerPosition().x)+','+parseInt(stage.getPointerPosition().y));
+		});
+	});
+
+	layer.add(text);
+	stage.add(layer);
 </script>
