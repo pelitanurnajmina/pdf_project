@@ -104,3 +104,9 @@
 .form-attribute {
 	width: 80% !important;
 }
+
+.box-form {
+	border: 1px solid #DDD; 
+	padding: 20px; 
+	box-shadow: 2px 2px #888888;
+}
