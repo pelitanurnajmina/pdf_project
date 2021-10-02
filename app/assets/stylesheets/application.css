@@ -9,8 +9,10 @@
 }
 
 #pdf-main-container {
-	width: 400px;
-	margin: 20px auto;
+	/*width: 400px;*/
+	padding: 20px;
+	border: 1px solid #343a40;
+	margin-top: 5px;
 }
 
 #pdf-loader {
